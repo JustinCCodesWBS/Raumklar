@@ -1,0 +1,26 @@
+{
+  "name": "raumklar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch --conditions=development src/app.ts",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/app.js"
+  },
+  "keywords": [],
+  "type": "module",
+  "imports": {
+    "#utils": {
+      "development": "./src/utils/index.ts",
+      "default": "./dist/utils/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
