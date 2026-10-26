@@ -1,20 +1,27 @@
-import { pickRandom } from '#utils';
+import { client } from "./db.ts";
+import { findReport } from "./reports.ts";
+import { parseReportId } from "./input.ts";
 
-type Report = {
-    title: string;
-    description: string;
-    room: string;
-    status: 'open' | 'resolved'
+
+async function main() {
+    try {
+        const input = process.argv[2];
+        if (!input) throw new Error('Bitte eine Meldungs-ID als Argument angeben.')
+
+        const id = parseReportId(input);
+
+        await client.connect();
+
+        const report = await findReport(id);
+
+        console.log(report ?? 'Meldung nicht gefunden.')
+
+    } finally {
+        await client.close();
+    }
 }
 
-const report: Report = {
-
-    title: 'Bildschirm bleibt schwarz',
-    description: 'Der angeschlossene Bildschirm zeigt beim Einschalten kein Bild.',
-    room: 'Raum A',
-    status: 'open',
-}
-
-console.log(report);
-console.log('Zufälliger Raum:', pickRandom(['Raum A', 'Raum B']));
-console.log('Leere Auswahl:', pickRandom([]));
+main().catch((error: unknown) => {
+    console.error('Fehler:', error instanceof Error ? error.message : 'Unbekannter Fehler');
+    process.exitCode = 1;
+});
