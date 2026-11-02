@@ -26,10 +26,6 @@ export async function removeReport(id: Types.ObjectId) {
     return Report.deleteOne({ _id: id });
 }
 
-export async function searchReports(text: string) {
-    return Report.find({ $text: { $search: text } }).populate('roomId', 'name').lean();
-}
-
 export async function summarizeReports() {
     return Report.aggregate<RoomSummary>([
         { $match: { status: 'open' } },
