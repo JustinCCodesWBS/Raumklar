@@ -13,13 +13,22 @@
   },
   "keywords": [],
   "type": "module",
-  "imports": {},
+  "imports": {
+    "#db": {
+      "development": "./src/db.ts",
+      "default": "./dist/db.js"
+    },
+    "#models": {
+      "development": "./src/models/index.ts",
+      "default": "./dist/models/index.js"
+    }
+  },
   "devDependencies": {
     "@types/node": "^26.6.5",
     "typescript": "^7.0.2"
   },
   "dependencies": {
     "commander": "^15.0.0",
-    "mongodb": "^7.7.0"
+    "mongoose": "^9.11.4"
   }
 }

@@ -1,10 +1,10 @@
-import { ObjectId } from 'mongodb';
+import { Types } from 'mongoose';
 
-export function parseReportId(input: string): ObjectId {
-    if (!ObjectId.isValid(input)) {
+export function parseReportId(input: string): Types.ObjectId {
+    if (!/^[a-fA-F0-9]{24}$/.test(input)) {
         throw new Error('Die ID muss aus 24 Hexzeichen bestehen.');
     }
-    return new ObjectId(input);
+    return new Types.ObjectId(input);
 }
 
 export function requireText(input: string, fieldName: string): string {

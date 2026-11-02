@@ -1,11 +1,11 @@
-import { client } from './db.ts';
 import { program } from './cli.ts';
+import { disconnectDB } from '#db';
 
 async function main() {
     try {
         await program.parseAsync(process.argv);
     } finally {
-        await client.close();
+        await disconnectDB();
     }
 }
 
